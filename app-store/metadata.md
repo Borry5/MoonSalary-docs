@@ -1,4 +1,4 @@
-# App Store 上架文案（0.2.19）
+# App Store 上架文案（0.2.20）
 
 > 各字段的字符上限是 App Store Connect 的硬限制，提交前请勿超出。
 > 下面每个字段后面都标了实际字符数，改动后请重新核对。
@@ -138,7 +138,7 @@ macOS 版把数字摆在菜单栏上，写代码、写文档的时候余光扫�
 | 支持 URL | `https://borry5.github.io/MoonSalary-docs/support/` |
 | 营销 URL | `https://borry5.github.io/MoonSalary-docs/` |
 | 隐私政策 URL | `https://borry5.github.io/MoonSalary-docs/privacy/` |
-| 版本号 | `0.2.19` |
+| 版本号 | `0.2.20` |
 | 构建号 | `1`（`CURRENT_PROJECT_VERSION`，尚未上传过） |
 | 版权 | `© 2026 Bo Meng` |
 | 主要语言 | 简体中文 |
