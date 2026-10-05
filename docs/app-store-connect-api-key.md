@@ -6,10 +6,10 @@
 
 | 方案 | 需要什么 | 适合谁 |
 |---|---|---|
-| **A. 在 Xcode 里登录 Apple ID** | 你的 Apple ID + 密码（+ 双重验证） | ✅ **推荐给月薪鸭**，零成本、5 分钟 |
+| **A. 在 Xcode 里登录 Apple ID** | 你的 Apple ID + 密码（+ 双重验证） | ✅ **推荐给打表上班**，零成本、5 分钟 |
 | **B. App Store Connect API Key** | 付费开发者账号的「用户和访问 → 集成」页面生成 `.p8` | 团队协作、CI 自动打包 |
 
-月薪鸭现在卡在 `error: exportArchive No Accounts`，**根因是本机 Xcode 没登录任何 Apple ID**，
+打表上班现在卡在 `error: exportArchive No Accounts`，**根因是本机 Xcode 没登录任何 Apple ID**，
 所以现在最省事的是**方案 A**。API Key 是给「不想在机器上存 Apple ID 密码」
 或「想让脚本在服务器上无人值守上传」的场景用的。
 
@@ -117,7 +117,7 @@ xcodebuild -exportArchive \
 
 ---
 
-## 五、月薪鸭该选哪个？
+## 五、打表上班该选哪个？
 
 **先用方案 A。** 理由：
 

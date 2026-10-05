@@ -1,6 +1,6 @@
 # 发布流程（打包 → 签名 → 上传 App Store）
 
-本文记录月薪鸭从改完代码到上传 App Store Connect 的完整链路，命令均已实测。
+本文记录打表上班从改完代码到上传 App Store Connect 的完整链路，命令均已实测。
 
 ## 0. 前置条件
 
@@ -23,14 +23,14 @@
 
 ## 1. 版本号约定
 
-- `MARKETING_VERSION` 只递增第三位（`0.2.18` → `0.2.19`），**绝不跳 0.2.x**
+- `MARKETING_VERSION` 只递增第三位（`0.2.19` → `0.2.20`），**绝不跳 0.2.x**
 - 每次改代码都要 bump，且与代码改动**在同一个提交里**
 - `CURRENT_PROJECT_VERSION`（build 号）**同一版本号下必须递增**，否则上传被拒
 - `MARKETING_VERSION` 在 `project.pbxproj` 里共 **4 处**（主 App Debug/Release + Widget Debug/Release），
   必须一起改
 
 ```bash
-grep -c "MARKETING_VERSION = 0.2.19;" MoonSalary.xcodeproj/project.pbxproj   # 应为 4
+grep -c "MARKETING_VERSION = 0.2.20;" MoonSalary.xcodeproj/project.pbxproj   # 应为 4
 ```
 
 ## 2. 构建环境（三个必设项）
@@ -169,7 +169,7 @@ codesign -dv --verbose=2 "<App>.app"
 每次发布前后打 tag 作为安全网，命名沿用 `baseline/<版本>-<说明>`：
 
 ```bash
-git tag -f baseline/0.2.19-asc-ready
+git tag -f baseline/0.2.20-asc-ready
 ```
 
 已上传到 App Store Connect 的构建版本**无法删除**（只能从销售中移除），
