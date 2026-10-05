@@ -73,6 +73,9 @@ ls "<iOS app>/PlugIns"              # 期望：有 MoonWidgetExtension.appex
 | 主 App | 26.5 | 12.0 |
 | 小组件 | 26.5 | 14.0 |
 
+`TARGETED_DEVICE_FAMILY = "1"` —— **只支持 iPhone**，iPad 支持已于 0.2.18 下线
+（原因见 `docs/compliance.md` 风险 5）。macOS 侧不受该设置影响。
+
 macOS 12 没有 `openWindow` / `.sensoryFeedback` / `SMAppService`，
 建窗口要用 AppDelegate + NSWindow，开机自启要按系统版本分流。
 
@@ -110,3 +113,13 @@ macOS 12 没有 `openWindow` / `.sensoryFeedback` / `SMAppService`，
 | 0.2.14 | 摸鱼 / 加班模式：全平台下线入口与前端页面 | 逻辑代码保留在 `MoonSalaryApp.swift`，含恢复片段注释 |
 | 0.2.15 | 小组件主屏 / 桌面 family；App 内「小组件」tab | `IncomeWidget.supportedFamilies` 加回 family；`ContentView` 放回 tag 1 |
 | 0.2.16 | 「去下载 macOS 版」导流弹窗 | `ContentView.macPromoEnabled` 改回 `true`，**且必须先把 URL 换成 Mac App Store 链接** |
+| 0.2.18 | iPad 支持（`TARGETED_DEVICE_FAMILY` 由 `"1,2"` 改为 `"1"`） | 改回 `"1,2"` 即可让 App 可装到 iPad，但**当前布局在 iPad 上是坏的**，恢复前必须先重做 iPad 根导航 |
+
+## 版本变更记录（发布分支）
+
+| 版本 | 类型 | 内容 |
+|---|---|---|
+| 0.2.15 | 收窄 | 小组件只保留锁屏信息展示 |
+| 0.2.16 | 合规 | 隐私清单 `PrivacyInfo.xcprivacy`（主 App + Widget）、出口合规声明、冻结 macOS 导流弹窗 |
+| 0.2.17 | 修 bug | 加班日不再显示「今天休息」——`statusText` 原来只看 `isRestDay`（日历），而 `currentEarnings` 会读 `DayOverrideStore` 应用加班倍数，两者口径不同源。现在 `statusText` 在 `isRestDay` 判断之前先查当天是否有 `overtime` 覆盖。影响 TodayView 与 MoonWidget 锁屏组件 |
+| 0.2.18 | 收窄 | 取消 iPad 支持，只保留 iPhone |

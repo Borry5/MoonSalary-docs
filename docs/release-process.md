@@ -14,21 +14,23 @@
 **如果 `security find-identity -v -p codesigning` 只有 `Apple Development`，
 导出会失败并报 `error: exportArchive No Accounts`。** 这不是代码问题，
 先让 Xcode 登录 Apple ID（会自动补发 Apple Distribution 证书与 App Store 描述文件）。
+**完整图文步骤见 [`docs/app-store-connect-api-key.md`](app-store-connect-api-key.md)。**
 
 > 只想让 `xcodebuild` 自动管理签名与证书，还可以给命令加
 > `-authenticationKeyPath` / `-authenticationKeyID` / `-authenticationKeyIssuerID`
 > 三个参数走 App Store Connect API Key，就不依赖 Xcode 里登录的账号。
+> 这三个值怎么来，同样见 [`docs/app-store-connect-api-key.md`](app-store-connect-api-key.md)。
 
 ## 1. 版本号约定
 
-- `MARKETING_VERSION` 只递增第三位（`0.2.16` → `0.2.17`），**绝不跳 0.2.x**
+- `MARKETING_VERSION` 只递增第三位（`0.2.17` → `0.2.18`），**绝不跳 0.2.x**
 - 每次改代码都要 bump，且与代码改动**在同一个提交里**
 - `CURRENT_PROJECT_VERSION`（build 号）**同一版本号下必须递增**，否则上传被拒
 - `MARKETING_VERSION` 在 `project.pbxproj` 里共 **4 处**（主 App Debug/Release + Widget Debug/Release），
   必须一起改
 
 ```bash
-grep -c "MARKETING_VERSION = 0.2.16;" MoonSalary.xcodeproj/project.pbxproj   # 应为 4
+grep -c "MARKETING_VERSION = 0.2.18;" MoonSalary.xcodeproj/project.pbxproj   # 应为 4
 ```
 
 ## 2. 构建环境（三个必设项）
@@ -153,7 +155,7 @@ codesign -dv --verbose=2 "<App>.app"
 
 | 报错 | 原因 | 处理 |
 |---|---|---|
-| `error: exportArchive No Accounts` | Xcode 没登录 Apple ID，也没有 API Key | 登录 Xcode 账号，或改用 API Key 三参数 |
+| `error: exportArchive No Accounts` | Xcode 没登录 Apple ID，也没有 API Key | 登录 Xcode 账号，或改用 API Key 三参数（见 `docs/app-store-connect-api-key.md`） |
 | `No profiles for 'xxx' were found ... iOS App Store provisioning profiles` | 没有分发证书 / App Store 描述文件 | 同上；登录后 Xcode 会自动创建 |
 | `No signing certificate "iOS Distribution" found` | 同上 | 同上 |
 | 满屏 `SwiftUIMacros.StateMacro could not be found` + `swift-plugin-server produced malformed response` | 宏插件子进程的沙箱无法嵌套 | 加 `OTHER_SWIFT_FLAGS='$(inherited) -Xfrontend -disable-sandbox'` |
@@ -166,7 +168,7 @@ codesign -dv --verbose=2 "<App>.app"
 每次发布前后打 tag 作为安全网，命名沿用 `baseline/<版本>-<说明>`：
 
 ```bash
-git tag -f baseline/0.2.16-asc-ready
+git tag -f baseline/0.2.18-asc-ready
 ```
 
 已上传到 App Store Connect 的构建版本**无法删除**（只能从销售中移除），

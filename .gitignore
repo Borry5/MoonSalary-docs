@@ -1,2 +1,6 @@
 .DS_Store
 *.swp
+
+# App Store Connect API Key（上传凭据，绝不能提交）
+*.p8
+AuthKey_*.p8

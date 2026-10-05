@@ -1,4 +1,4 @@
-# App Store 上架文案（0.2.16）
+# App Store 上架文案（0.2.18）
 
 > 各字段的字符上限是 App Store Connect 的硬限制，提交前请勿超出。
 > 下面每个字段后面都标了实际字符数，改动后请重新核对。
@@ -126,11 +126,13 @@ macOS 版把数字摆在菜单栏上，写代码、写文档的时候余光扫�
 | 支持 URL | `https://borry5.github.io/MoonSalary-docs/support/` |
 | 营销 URL | `https://borry5.github.io/MoonSalary-docs/` |
 | 隐私政策 URL | `https://borry5.github.io/MoonSalary-docs/privacy/` |
-| 版本号 | `0.2.16` |
+| 版本号 | `0.2.18` |
+| 构建号 | `1`（`CURRENT_PROJECT_VERSION`，0.2.18 尚未上传过） |
 | 版权 | `© 2026 Bo Meng` |
 | 主要语言 | 简体中文 |
 | Bundle ID（iOS / macOS 共用） | `borry5.MoonSalary` |
 | SKU | 建议填 `MoonSalary-001` |
+| 支持设备 | **仅 iPhone**（0.2.18 起取消 iPad 支持） |
 
 ---
 
@@ -159,13 +161,25 @@ macOS 版把数字摆在菜单栏上，写代码、写文档的时候余光扫�
 
 ## 需要准备的图片素材
 
-| 用途 | 尺寸要求 | 数量 |
-|---|---|---|
-| iPhone 6.9" 截图 | 1320 × 2868 | 3–10 张 |
-| iPhone 6.7" 截图 | 1290 × 2796 | 3–10 张 |
-| iPad 13" 截图 | 2064 × 2752 | 3–10 张（支持 iPad 则必需） |
-| macOS 截图 | 1280 × 800 / 1440 × 900 / 2560 × 1600 / 2880 × 1800 | 3–10 张 |
-| App 图标 | 1024 × 1024 PNG，无圆角无透明 | 1 张（已在资源目录内） |
+现成可用的图在 `screenshots/` 目录，生成流程见 `docs/app-store-screenshots.md`。
 
-> 本项目 `TARGETED_DEVICE_FAMILY = "1,2"`，即同时支持 iPhone 与 iPad，
-> 因此 **iPad 截图是必填项**。
+| 用途 | 尺寸要求 | 数量 | 当前状态 |
+|---|---|---|---|
+| iPhone 6.9" 截图 | 1320 × 2868 | 3–10 | ✅ `screenshots/iphone-6.9-*.png`（3 张，实测就是这个尺寸） |
+| iPhone 6.7" 截图 | 1290 × 2796 | 3–10 | 可选，有 6.9" 即可 |
+| iPad 13" 截图 | 2064 × 2752 | — | ❌ 不再需要（0.2.18 起 `TARGETED_DEVICE_FAMILY = "1"`，iPhone-only） |
+| macOS 截图 | 1280 × 800 | 3–10 | ✅ `screenshots/mac-1280x800-*.png`（2 张） |
+| App 图标 | 1024 × 1024 PNG，无圆角无透明 | 1 张 | ✅ 已在资源目录内（`icon_1024.png`） |
+
+> **截图里的数字是播种的演示数据**，用的是 App 自带默认值
+> （月薪 ¥5654 / 双休含调休 / 09:00–18:00）。具体清单见
+> `docs/app-store-screenshots.md` 第四节。
+
+### macOS 截图还可以补
+
+目前只有 2 张（实时进账面板、设置面板），App Store 要求至少 3 张。
+建议再补一张，可选方向：
+
+- 菜单栏折叠态（只有 `¥ 628.2` 状态项，没有展开面板）
+- 「我的」页的 macOS 版本（`WindowSettingsPopover`）
+- 深色模式下的面板

@@ -47,7 +47,7 @@
   <h2>4. 关于设备标识</h2>
   <p>为了在 iCloud 的「设备名录」里让你看清哪些设备同步了数据，月薪鸭需要一个能区分设备的本地标识：</p>
   <ul>
-    <li><strong>iPhone / iPad</strong>：使用 Apple 官方提供的 <code>identifierForVendor</code>。</li>
+    <li><strong>iPhone（iOS）</strong>：使用 Apple 官方提供的 <code>identifierForVendor</code>。</li>
     <li><strong>Mac</strong>：读取主板的平台 UUID（<code>IOPlatformUUID</code>），拼接 macOS 用户名后经 <strong>SHA-256 哈希</strong>，得到一串不可逆的指纹字符串。</li>
   </ul>
   <p>这个标识的用途<strong>仅限</strong>在设备名录里区分「这是哪一台设备」，好让你知道自己有几台设备在同步。</p>
@@ -117,7 +117,7 @@
   <p>To let you see which of your devices have synced, MoonSalary needs a local identifier that can
   distinguish devices:</p>
   <ul>
-    <li><strong>iPhone / iPad</strong>: Apple's official <code>identifierForVendor</code>.</li>
+    <li><strong>iPhone (iOS)</strong>: Apple's official <code>identifierForVendor</code>.</li>
     <li><strong>Mac</strong>: the platform UUID (<code>IOPlatformUUID</code>), combined with the macOS user
       name and hashed with <strong>SHA-256</strong> to produce an irreversible fingerprint string.</li>
   </ul>

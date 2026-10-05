@@ -74,22 +74,51 @@ Mac App Store 版本后实测一次。**
 `presentationDetents` 等）都有更低版本的门槛，降低部署目标需要逐个加可用性判断，
 工作量中等但收益明显。
 
+### 5. iPad 支持已下线 ℹ️ 0.2.18 决策
+
+`TARGETED_DEVICE_FAMILY` 从 `"1,2"` 改为 `"1"`，**只保留 iPhone**。
+
+**原因**：iPadOS 18+ 会把根 `TabView` 适配成顶部分段式 tab 栏，
+内容被挤进左侧约 228pt 的窄栏，右侧大片留白、文字截断
+（实测「月薪 ¥5654 · 日…」被切掉），布局是坏的。
+
+**决策**：与其临时修一套 iPad 布局，不如先只上 iPhone。
+日后要恢复 iPad，需要重新设计 iPad 版根导航（改用 `NavigationSplitView`
+或针对 `horizontalSizeClass == .regular` 单独排版），不是改一行配置的事。
+
+**连带收益**：App Store 不再要求提交 iPad 13" 截图。
+
 ## 三、提交审核前待办
 
-- [ ] Xcode 登录开发者账号，确认 Apple Distribution 证书就位
-- [ ] 归档 iOS + macOS，导出并上传
+- [ ] **在 Xcode 登录 Apple ID**（Settings → Accounts，团队 `3CKSH29X7T`）
+      —— 这是导出 / 上传的硬阻塞，目前本机只有 Apple Development 证书，
+      没有 Apple Distribution 分发证书
+- [ ] 归档 iOS，`-exportArchive` 导出 ipa
+- [ ] 归档 macOS，导出 pkg
+- [ ] 上传（把 `ExportOptions.plist` 的 `destination` 从 `export` 改成 `upload`）
 - [ ] 在 App Store Connect 创建 App 记录（Bundle ID `borry5.MoonSalary`）
 - [ ] 填 `app-store/metadata.md` 里的全部文案
-- [ ] 上传各尺寸截图（iPhone 6.9" / 6.7" / iPad 13" / macOS）
+- [ ] 上传截图（iPhone 6.9" ✅ 3 张已备；**iPad 已不再需要**；macOS ✅ 2 张，
+      建议再补一张凑满 3 张）
 - [ ] 填「App 隐私」问卷（选「不收集数据」，见 `app-store/privacy-answers.md`）
 - [ ] 填年龄分级问卷（见 `app-store/age-rating.md`）
 - [ ] 填审核备注（见 `app-store/review-notes.md`）
 - [ ] 确认定价与分发范围
 - [ ] 决定是否调整 iOS 部署目标（见风险 4）
+- [ ] （代码待办）工作日请假时金额归零、但状态文案仍显示「搬砖中 / 下班！」，
+      与 0.2.17 修掉的加班日 bug 同根因（`statusText` 与 `currentEarnings` 不同源）
 
 ## 四、关于截图
 
-`TARGETED_DEVICE_FAMILY = "1,2"` 表示同时支持 iPhone 与 iPad，
-因此 **iPad 13" 截图是必填项**，不是可选项。
+0.2.18 起 `TARGETED_DEVICE_FAMILY = "1"`，**只支持 iPhone**，
+所以 **iPad 13" 截图不再是必填项**。
 
-各尺寸要求见 `app-store/metadata.md` 末尾的表格。
+| 平台 | 是否必填 | 当前已备 |
+|---|---|---|
+| iPhone 6.9"（1320×2868） | ✅ 必填 | 3 张 |
+| iPhone 6.7"（1290×2796） | 可复用 6.9" 素材 | — |
+| iPad 13"（2064×2752） | ❌ 不再需要 | — |
+| macOS（1280×800 起） | ✅ 必填（≥3 张） | 2 张，**建议补 1 张** |
+
+尺寸表与生成流程见 `docs/app-store-screenshots.md`，
+成品在 `app-store/screenshots/`。
