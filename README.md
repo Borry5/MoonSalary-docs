@@ -1,6 +1,6 @@
-# 月薪鸭 · 官方文档
+# 打表上班 · 官方文档
 
-本仓库是 **月薪鸭（MoonSalary）** 的官方文档仓库，同时通过 GitHub Pages 提供 App Store 上架所需的隐私政策与技术支持页面。
+本仓库是 **打表上班（MoonSalary）** 的官方文档仓库，同时通过 GitHub Pages 提供 App Store 上架所需的隐私政策与技术支持页面。
 
 - 站点地址：<https://borry5.github.io/MoonSalary-docs/>
 - 隐私政策：<https://borry5.github.io/MoonSalary-docs/privacy/>
@@ -20,7 +20,7 @@
 | `docs/app-store-screenshots.md` | 截图尺寸要求与生成流程（模拟器播种 / macOS 离屏渲染） |
 | `docs/app-store-connect-api-key.md` | 在 Xcode 登录 Apple ID / 生成 API Key 的图文步骤 |
 
-## 关于月薪鸭
+## 关于打表上班
 
 一款给打工人用的「实时进账」App。把月薪换算成看得见的每秒收入，在 iPhone 锁屏和 Mac 菜单栏上实时滚动。
 
@@ -32,11 +32,12 @@
 
 ## 当前版本
 
-**0.2.19**（构建号 1）——对应发布分支 `release` 的 tag `baseline/0.2.19-asc-ready`。
+**0.2.20**（构建号 1）—— 0.2.20 把 App 显示名从「月薪鸭」改成「打表上班」，
+与 App Store 商店名统一，因此需要重新归档上传。
 
-> ⚠️ 打包上传的硬阻塞：本机 Xcode 尚未登录 Apple ID，
-> 只有 `Apple Development` 证书、没有 `Apple Distribution`。
-> 解决步骤见 [`docs/app-store-connect-api-key.md`](docs/app-store-connect-api-key.md)。
+> ⚠️ 打包上传的硬阻塞：开发者账号的 Program License Agreement 有更新未同意，
+> 同意前所有上传一律被拒。见 [`docs/release-process.md`](docs/release-process.md)
+> 的常见报错对照。（本机 Xcode 未登录 Apple ID 的问题已解决。）
 
 ## 维护说明
 

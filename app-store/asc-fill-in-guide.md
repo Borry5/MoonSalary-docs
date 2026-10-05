@@ -8,18 +8,27 @@
 
 ## 一、三个冲突的处理结论
 
-### ✅ 冲突 1：App 名称 —— 已定
+### ✅ 冲突 1：App 名称 —— 已解决（0.2.20）
 
-**商店名称就用「打表上班」。** 文档仓库里的名称、关键词已全部同步。
+**商店名称与 App 显示名统一为「打表上班」。**
 
-> ⚠️ **但要留意一个副作用**：App **装到手机上显示的名字仍是「月薪鸭」**
-> （工程里 `INFOPLIST_KEY_CFBundleDisplayName = "月薪鸭"`）。
-> 商店页叫「打表上班」、桌面上叫「月薪鸭」，用户会困惑。
-> 建议二选一：
-> - 把 `CFBundleDisplayName` 也改成「打表上班」（需改代码 + bump 版本 + 重新归档上传）
-> - 或者商店名称改回「月薪鸭 - 实时进账工资条」
->
-> 保持不一致**不违反**审核指南，但会明显影响转化。
+原先商店页叫「打表上班」、而 App 装到手机上显示「月薪鸭」，两边不一致
+会明显影响转化。0.2.20 已把工程与网页里的名字一并改掉：
+
+| 位置 | 改动 |
+|---|---|
+| 主 App `INFOPLIST_KEY_CFBundleDisplayName` | 月薪鸭 → **打表上班**（Debug / Release） |
+| 主 App `INFOPLIST_KEY_CFBundleName` | 同上 |
+| Widget `INFOPLIST_KEY_CFBundleDisplayName` | `MoonWidget` → **打表上班** |
+| 锁屏行内小组件文案（`IncomeWidget.swift`） | `"月薪鸭 ¥628.2"` → `"打表上班 ¥628.2"` |
+| macOS 窗口标题（`MoonSalaryApp.swift`） | `WindowGroup("月薪鸭")` → `WindowGroup("打表上班")` |
+| 三个网页（首页 / 技术支持 / 隐私政策） | 品牌名全部替换 |
+
+> **`PRODUCT_NAME` 故意没改**（仍是 `月薪鸭`）。它决定产物文件名 `月薪鸭.app`，
+> 改了会牵动归档路径、导出脚本和 DMG 打包脚本；而用户看到的名字由
+> `CFBundleDisplayName` 决定 —— Finder 和 App Store 都显示「打表上班」，不受影响。
+
+> ⚠️ 因为显示名变了，**必须重新归档并上传**（0.2.20），0.2.19 那份归档作废。
 
 ### ✅ 冲突 2：版本号 —— 已定
 
@@ -137,7 +146,7 @@ https://borry5.github.io/MoonSalary-docs/
 | 名字 | `Bo` |
 | 姓氏 | `Meng` |
 | 电话号码 | `19315879918` |
-| 电子邮件 | `borrymeng5@126.com` |
+| 电子邮件 | `borrymeng5@gmail.com` |
 
 （这三个值来自你账号资料，Apple 默认也会预填。）
 
@@ -149,7 +158,7 @@ https://borry5.github.io/MoonSalary-docs/
 本 App 无账号体系、无服务器、无网络账号需求，可直接使用。
 
 锁屏小组件的测试方式：在 iPhone 锁屏上长按 → 自定 → 添加小组件 →
-找到「月薪鸭」，选「今日到手」矩形或行内样式。
+找到「打表上班」，选「今日到手」矩形或行内样式。
 
 App 会访问 cdn.jsdelivr.net 与 raw.githubusercontent.com 拉取公开的
 中国大陆法定节假日数据集，请求只带年份、不带任何用户信息。
