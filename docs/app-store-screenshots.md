@@ -6,13 +6,49 @@
 
 | 用途 | 规格 | 数量 | 当前是否必需 |
 |---|---|---|---|
-| iPhone 6.9" | 1320 × 2868 | 3–10 | **必需** |
-| iPhone 6.7" | 1290 × 2796 | 3–10 | 可选（有 6.9" 即可） |
+| iPhone 6.9" | 1320 × 2868 | 3–10 | 备用 |
+| **iPhone 6.5" 槽位** | **1284 × 2778** | 3–10 | **必需**（ASC 实际只给这个槽位） |
+| iPhone 6.7" | 1290 × 2796 | 3–10 | 可选 |
 | iPad 13" | 2064 × 2752 | 3–10 | **不再需要**（0.2.18 起 iPhone-only） |
-| macOS | 1280 × 800 / 1440 × 900 / 2560 × 1600 / 2880 × 1800 | 3–10 | **必需**（上架 Mac App Store 时） |
+| macOS | 1280 × 800 | 1–10 | **必需**（上架 Mac App Store 时） |
+
+> ⚠️ **2026-10-06 实测更正**：App Store Connect 的 iPhone 截屏槽位标注为
+> 「**6.5 英寸显示屏**」，明确只接受
+> `1242 × 2688`、`2688 × 1242`、`1284 × 2778`、`2778 × 1284` 四个尺寸。
+> **1320 × 2868 不在其中，拖进去会被拒。**
+> 所以现在同时出两套：`1284 × 2778` 喂给这个槽位，`1320 × 2868` 备用。
 
 模拟器实测：`iPhone 18 Pro Max` 出图正好 **1320 × 2868**；
 `iPad Pro 13-inch (M5)` 出图正好 **2064 × 2752**。都不用再缩放。
+
+## 一之二、成品在哪里
+
+| 目录 | 内容 |
+|---|---|
+| `app-store/screenshots/` | **原始截图**（App 真实界面，未经排版） |
+| `app-store/screenshots/asc/` | **营销排版成品**（品牌底色 + 卖点文案 + 圆角截图），直接上传用 |
+
+`asc/` 下的命名：
+
+```
+iphone-6.9-1-lockscreen.png   1320×2868   锁屏小组件
+iphone-6.9-2-overview.png     1320×2868   总览页
+iphone-6.9-3-stats.png        1320×2868   统计页
+iphone-6.5-*.png              1284×2778   同上三张，喂 6.5" 槽位
+mac-1-menubar.png             1280×800    菜单栏面板
+```
+
+## 一之三、营销排版怎么做的
+
+纯 Python + Pillow（系统 `/usr/bin/python3` 自带 11.3.0），脚本在
+`/tmp/msrender-lock/frames.py`（临时，未入库）。要点：
+
+- **中文卖点文案**用苹方 SC Semibold。**苹方不在 `/System/Library/Fonts/`**，
+  在 `/System/Library/AssetsV2/com_apple_MobileAsset_Font8/<hash>.asset/AssetData/PingFang.ttc`。
+  Pillow 索引：**3 = SC Regular、7 = SC Medium、11 = SC Semibold**
+- 底色用柔和奶油渐变 `#FFF9EB → #FFE4A0`，深棕文字 `#2A2A00`。
+  **别用饱和的琥珀 `#FFD65C → #EEA400`** —— 实测会压住截图，观感很吵
+- 截图圆角 56px，先画一层高斯模糊的深色圆角矩形当投影，再贴图
 
 ## 二、iPhone 截图
 
@@ -125,6 +161,42 @@ xcrun -sdk macosx swiftc -O -swift-version 5 -target arm64-apple-macos13.0 \
 1. **必须先 `_ = NSApplication.shared`**，否则字体与文字绘制会崩（SIGTRAP / exit 133）
 2. **`NSGraphicsContext.current` 要在 `saveGraphicsState()` 之前设好**，
    顺序反了同样崩在 133
+
+## 三之二、锁屏小组件截图（离屏渲染）
+
+锁屏小组件是这个 App 的头号卖点，但**模拟器截不出来**：
+`simctl` 没有把小组件装到锁屏的 API，模拟器也点不了。所以改用
+**SwiftUI `ImageRenderer` 离屏渲染整套锁屏**。
+
+思路：整张锁屏（壁纸渐变 + 9:41 + 日期 + 小组件 + 底部手电/相机按钮）
+都在 SwiftUI 里搭出来，逻辑尺寸 440×956、`renderer.scale = 3`，
+一次渲染正好 **1320×2868**。小组件的字号/字重/颜色严格照搬
+`MoonWidget/IncomeWidget.swift` 的 `lockScreenView`：
+
+```swift
+Text(amount)
+    .font(.system(size: 24, weight: .heavy, design: .rounded))
+    .foregroundColor(.white)
+    .monospacedDigit()
+```
+
+**为什么用 `ImageRenderer` 而不是 `NSHostingView` + `cacheDisplay`：**
+
+- `ImageRenderer` 直接给 `.scale`，出图倍率可控，不用手动摆 `NSBitmapImageRep`
+- 不用碰 `NSGraphicsContext.current` 与 `saveGraphicsState()` 的顺序坑（顺序反了崩 exit 133）
+- **不会撞上视图的入场动画** —— 旧版 macOS 设置面板截图就是这么渲成半透明重影的
+
+编译（三个开关一个都不能漏）：
+
+```bash
+xcrun -sdk macosx swiftc -O -swift-version 5 -target arm64-apple-macos13.0 \
+  -Xfrontend -disable-sandbox \
+  -Xfrontend -default-isolation -Xfrontend MainActor \
+  -o /tmp/msrender-lock/render main.swift
+```
+
+⚠️ **`ImageRenderer` 渲染不了 `TextField`** —— 会渲染成黄底带 🚫 的方块。
+所以**设置面板那类含输入框的界面不能走这条路**。
 
 ## 四、演示数据说明
 
