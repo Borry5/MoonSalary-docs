@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>隐私政策 — 月薪鸭</title>
+<meta name="description" content="月薪鸭隐私政策：不收集任何个人信息，数据仅存本机与用户自己的 iCloud 私有空间。">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site">
+    <div class="brandline"><span class="dot"></span>月薪鸭 MoonSalary</div>
+  </header>
+
+  <h1>隐私政策</h1>
+  <p class="meta">生效日期：2026 年 10 月 5 日 · 最近更新：2026 年 10 月 5 日</p>
+
+  <p class="lede">
+    一句话版本：<strong>月薪鸭不收集你的任何个人信息。</strong>
+    没有账号，没有埋点，没有广告，没有第三方 SDK。你的薪资与工作记录只存在本机和你自己的 iCloud 私有空间里，开发者无法访问。
+  </p>
+
+  <h2>1. 我们收集哪些信息</h2>
+  <p><strong>不收集。</strong>月薪鸭没有服务器，没有账号体系，不上传任何数据到开发者可访问的地方。</p>
+  <p>你在 App 内填写的薪资方案、工作日设置、请假与加班记录，全部只做两件事：存在本机，以及（在你开启 iCloud 同步时）写入<strong>你自己的 iCloud 私有数据库</strong>。</p>
+
+  <h2>2. 数据存在哪里</h2>
+
+  <h3>本机存储</h3>
+  <p>设置项与工作记录保存在设备本地的偏好存储（<code>UserDefaults</code>）与应用组共享空间（App Group）中，供 App 与锁屏小组件读取同一份数据。</p>
+
+  <h3>iCloud 同步（可选）</h3>
+  <p>开启后，数据通过 Apple 的 iCloud 键值存储（<code>NSUbiquitousKeyValueStore</code>）在你的多台设备之间同步。这份数据位于你 Apple ID 名下的私有空间，受 Apple 的 iCloud 条款与加密机制保护，<strong>开发者没有任何途径读取</strong>。</p>
+  <p>你可以随时在 App 的「我的 → iCloud 同步」里关闭同步。</p>
+
+  <h2>3. 网络请求</h2>
+  <p>App 只有一个联网场景：获取中国大陆法定节假日与调休安排（用于「双休（含调休）」方案）。</p>
+  <ul>
+    <li>请求地址为公开的节假日数据集（<code>NateScarlet/holiday-cn</code>），通过 jsDelivr CDN 与 GitHub 原始地址获取。</li>
+    <li>请求内容<strong>只有年份</strong>，不携带任何用户信息、设备信息或标识符。</li>
+    <li>和任何网络请求一样，CDN 服务方在技术层面会看到发起请求的 IP 地址。这是网络通信的固有属性，与月薪鸭本身无关，我们也不接收、不存储这些信息。</li>
+  </ul>
+  <p>除此之外，App 不会主动发起任何网络连接。</p>
+
+  <h2>4. 关于设备标识</h2>
+  <p>为了在 iCloud 的「设备名录」里让你看清哪些设备同步了数据，月薪鸭需要一个能区分设备的本地标识：</p>
+  <ul>
+    <li><strong>iPhone / iPad</strong>：使用 Apple 官方提供的 <code>identifierForVendor</code>。</li>
+    <li><strong>Mac</strong>：读取主板的平台 UUID（<code>IOPlatformUUID</code>），拼接 macOS 用户名后经 <strong>SHA-256 哈希</strong>，得到一串不可逆的指纹字符串。</li>
+  </ul>
+  <p>这个标识的用途<strong>仅限</strong>在设备名录里区分「这是哪一台设备」，好让你知道自己有几台设备在同步。</p>
+  <p>它<strong>不</strong>用于广告、<strong>不</strong>用于跨 App 追踪、<strong>不</strong>会上传给开发者，也<strong>不</strong>与任何第三方共享。它只出现在你自己的 iCloud 私有空间里。</p>
+
+  <h2>5. 我们不做什么</h2>
+  <ul>
+    <li>不收集个人身份信息（姓名、手机号、邮箱、位置、通讯录、照片等一概不碰）</li>
+    <li>不接入任何统计埋点或崩溃收集 SDK</li>
+    <li>不接入任何广告 SDK，App 内无广告</li>
+    <li>不使用跨 App 追踪（<code>NSPrivacyTracking</code> 为 <code>false</code>）</li>
+    <li>不向任何第三方出售、出租或共享你的数据</li>
+  </ul>
+
+  <h2>6. 数据保留与删除</h2>
+  <ul>
+    <li><strong>清空本机数据</strong>：删除 App 即可移除设备上的全部数据。</li>
+    <li><strong>清空 iCloud 数据</strong>：打开「设置 → 你的名字 → iCloud → 管理账户存储」，找到月薪鸭并删除其数据。或者先在 App 内关闭 iCloud 同步，再删除 App。</li>
+    <li>由于我们本就无法访问你的数据，因此不存在「向开发者申请删除」这一环节。</li>
+  </ul>
+
+  <h2>7. 儿童隐私</h2>
+  <p>月薪鸭不面向 13 周岁以下儿童，也不会有意收集儿童的任何信息。由于本 App 不收集任何个人信息，这一条天然成立。</p>
+
+  <h2>8. 政策变更</h2>
+  <p>若本政策发生实质性变更，我们会更新本页面顶部的「最近更新」日期，并在 App 更新说明中提示。</p>
+
+  <h2>9. 联系方式</h2>
+  <p>对隐私有任何疑问，请联系：<a href="mailto:borrymeng5@gmail.com">borrymeng5@gmail.com</a></p>
+
+  <hr class="lang-split">
+
+  <h1>Privacy Policy</h1>
+  <p class="meta">Effective: October 5, 2026 · Last updated: October 5, 2026</p>
+
+  <p class="lede">
+    <strong>MoonSalary collects no personal information.</strong> No account, no analytics, no ads,
+    no third-party SDKs. Your salary settings and work records live only on your device and in your own
+    private iCloud space — the developer cannot access them.
+  </p>
+
+  <h2>1. Information We Collect</h2>
+  <p><strong>None.</strong> MoonSalary has no server and no user accounts. No data is ever uploaded to
+  anywhere the developer can reach.</p>
+
+  <h2>2. Where Your Data Lives</h2>
+  <p>Settings and work records are stored locally in <code>UserDefaults</code> and a shared App Group
+  container, so the app and its lock screen widget read the same data.</p>
+  <p>If you enable iCloud sync, data is synced across your devices via Apple's
+  <code>NSUbiquitousKeyValueStore</code>. It resides in the private space of your Apple ID, protected by
+  Apple's iCloud terms and encryption. <strong>The developer has no way to read it.</strong> You can turn
+  sync off at any time in <em>Profile → iCloud Sync</em>.</p>
+
+  <h2>3. Network Requests</h2>
+  <p>The app makes exactly one kind of network request: fetching Chinese mainland public holiday and
+  make-up workday data, used by the "Two-day weekend (incl. adjusted holidays)" scheme.</p>
+  <ul>
+    <li>It requests a public holiday dataset (<code>NateScarlet/holiday-cn</code>) via the jsDelivr CDN and
+      the GitHub raw endpoint.</li>
+    <li>The request contains <strong>only a year number</strong> — no user data, no device data, no identifiers.</li>
+    <li>As with any network request, the CDN operator can technically observe the requesting IP address.
+      That is inherent to networking, unrelated to MoonSalary, and we neither receive nor store it.</li>
+  </ul>
+  <p>Beyond this, the app initiates no network connections.</p>
+
+  <h2>4. Device Identifiers</h2>
+  <p>To let you see which of your devices have synced, MoonSalary needs a local identifier that can
+  distinguish devices:</p>
+  <ul>
+    <li><strong>iPhone / iPad</strong>: Apple's official <code>identifierForVendor</code>.</li>
+    <li><strong>Mac</strong>: the platform UUID (<code>IOPlatformUUID</code>), combined with the macOS user
+      name and hashed with <strong>SHA-256</strong> to produce an irreversible fingerprint string.</li>
+  </ul>
+  <p>This identifier is used <strong>solely</strong> to tell devices apart in your own device list. It is
+  <strong>not</strong> used for advertising, <strong>not</strong> used for cross-app tracking,
+  <strong>never</strong> sent to the developer, and <strong>never</strong> shared with third parties.</p>
+
+  <h2>5. What We Do Not Do</h2>
+  <ul>
+    <li>No personal data collection (name, phone, email, location, contacts, photos — none of it)</li>
+    <li>No analytics or crash-reporting SDKs</li>
+    <li>No advertising SDKs; the app contains no ads</li>
+    <li>No cross-app tracking (<code>NSPrivacyTracking</code> is <code>false</code>)</li>
+    <li>No selling, renting, or sharing of your data with anyone</li>
+  </ul>
+
+  <h2>6. Data Retention and Deletion</h2>
+  <ul>
+    <li><strong>Local data</strong>: deleting the app removes all data on that device.</li>
+    <li><strong>iCloud data</strong>: go to <em>Settings → [your name] → iCloud → Manage Account Storage</em>,
+      find MoonSalary, and delete its data — or disable iCloud sync in the app first, then delete the app.</li>
+    <li>Since we cannot access your data in the first place, there is no "request deletion from the developer"
+      step.</li>
+  </ul>
+
+  <h2>7. Children's Privacy</h2>
+  <p>MoonSalary is not directed at children under 13 and does not knowingly collect information from them.
+  As the app collects no personal information at all, this holds by construction.</p>
+
+  <h2>8. Changes to This Policy</h2>
+  <p>If this policy changes materially, we will update the "Last updated" date above and note it in the
+  app's release notes.</p>
+
+  <h2>9. Contact</h2>
+  <p>Questions about privacy: <a href="mailto:borrymeng5@gmail.com">borrymeng5@gmail.com</a></p>
+
+  <footer class="site">
+    <p>© 2026 MoonSalary · Developer: Bo Meng</p>
+  </footer>
+
+</div>
+</body>
+</html>
