@@ -6,6 +6,7 @@
 |---|---|---|
 | 隐私清单 `PrivacyInfo.xcprivacy` | ✅ 已加（主 App + Widget 各一份） | `MoonSalary/`、`MoonWidget/` |
 | 出口合规声明 | ✅ `ITSAppUsesNonExemptEncryption = NO` | `project.pbxproj` app target 的 Debug/Release |
+| App Category（macOS） | ✅ `LSApplicationCategoryType = public.app-category.productivity` | `project.pbxproj` app target 的 Debug/Release |
 | 无追踪声明 | ✅ `NSPrivacyTracking = false` | 两份隐私清单 |
 | required-reason API 声明 | ✅ 仅 `UserDefaults`（`CA92.1`） | 两份隐私清单 |
 | macOS App Sandbox | ✅ `ENABLE_APP_SANDBOX = YES` | `project.pbxproj` |

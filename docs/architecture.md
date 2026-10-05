@@ -123,3 +123,4 @@ macOS 12 没有 `openWindow` / `.sensoryFeedback` / `SMAppService`，
 | 0.2.16 | 合规 | 隐私清单 `PrivacyInfo.xcprivacy`（主 App + Widget）、出口合规声明、冻结 macOS 导流弹窗 |
 | 0.2.17 | 修 bug | 加班日不再显示「今天休息」——`statusText` 原来只看 `isRestDay`（日历），而 `currentEarnings` 会读 `DayOverrideStore` 应用加班倍数，两者口径不同源。现在 `statusText` 在 `isRestDay` 判断之前先查当天是否有 `overtime` 覆盖。影响 TodayView 与 MoonWidget 锁屏组件 |
 | 0.2.18 | 收窄 | 取消 iPad 支持，只保留 iPhone |
+| 0.2.19 | 配置 | 补上 macOS App Category（`INFOPLIST_KEY_LSApplicationCategoryType = public.app-category.productivity`），消除归档警告 `No App Category is set`。**注意**：条件写法 `[sdk=macosx*]` 会在 iOS 侧生成空字符串值，必须无条件设置 |

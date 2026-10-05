@@ -23,14 +23,14 @@
 
 ## 1. 版本号约定
 
-- `MARKETING_VERSION` 只递增第三位（`0.2.17` → `0.2.18`），**绝不跳 0.2.x**
+- `MARKETING_VERSION` 只递增第三位（`0.2.18` → `0.2.19`），**绝不跳 0.2.x**
 - 每次改代码都要 bump，且与代码改动**在同一个提交里**
 - `CURRENT_PROJECT_VERSION`（build 号）**同一版本号下必须递增**，否则上传被拒
 - `MARKETING_VERSION` 在 `project.pbxproj` 里共 **4 处**（主 App Debug/Release + Widget Debug/Release），
   必须一起改
 
 ```bash
-grep -c "MARKETING_VERSION = 0.2.18;" MoonSalary.xcodeproj/project.pbxproj   # 应为 4
+grep -c "MARKETING_VERSION = 0.2.19;" MoonSalary.xcodeproj/project.pbxproj   # 应为 4
 ```
 
 ## 2. 构建环境（三个必设项）
@@ -162,13 +162,14 @@ codesign -dv --verbose=2 "<App>.app"
 | `actool ... ICNS` / Assets.car 失败 | DerivedData 落在 iCloud Drive | 改 `-derivedDataPath /tmp/...` |
 | `error: 'accessoryInline' is unavailable in macOS` | 锁屏 accessory 系列是 iOS 专属 | `#if os(macOS)` 里返回合法 family |
 | 上传后收到 ITMS-91053 | 缺少隐私清单或 required-reason API 声明 | 补 `PrivacyInfo.xcprivacy` |
+| `warning: No App Category is set for target 'X'` | macOS 缺 `LSApplicationCategoryType`，Mac App Store 验证阶段可能被拦 | 加 `INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";`。**不要**用 `[sdk=macosx*]` 条件写法——实测它会在 iOS 侧生成一个空字符串值，比不设更脏 |
 
 ## 8. 回滚
 
 每次发布前后打 tag 作为安全网，命名沿用 `baseline/<版本>-<说明>`：
 
 ```bash
-git tag -f baseline/0.2.18-asc-ready
+git tag -f baseline/0.2.19-asc-ready
 ```
 
 已上传到 App Store Connect 的构建版本**无法删除**（只能从销售中移除），

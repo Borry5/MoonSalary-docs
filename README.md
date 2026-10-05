@@ -32,7 +32,7 @@
 
 ## 当前版本
 
-**0.2.18**（构建号 1）——对应发布分支 `release` 的 tag `baseline/0.2.18-asc-ready`。
+**0.2.19**（构建号 1）——对应发布分支 `release` 的 tag `baseline/0.2.19-asc-ready`。
 
 > ⚠️ 打包上传的硬阻塞：本机 Xcode 尚未登录 Apple ID，
 > 只有 `Apple Development` 证书、没有 `Apple Distribution`。
